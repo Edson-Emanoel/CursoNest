@@ -1,0 +1,3 @@
+- Gera um novo arquivo de module: `nest g module nome-modelo`
+- Gera um novo arquivo de controller: `nest g controller nome-modelo`
+- Gera um novo arquivo de service: `nest g service nome-modelo`
