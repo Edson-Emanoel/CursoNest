@@ -1,5 +1,5 @@
-import { Injectable } from '@nestjs/common';
 import { Task } from './entities/task.entity';
+import { Injectable, NotFoundException } from '@nestjs/common';
 
 @Injectable()
 export class TasksService {
@@ -10,7 +10,11 @@ export class TasksService {
   }
 
   findOneTask(id: string) {
-    return this.tasks.find((task) => task.id === Number(id));
+    const task = this.tasks.find((task) => task.id === Number(id));
+
+    if (task) return task;
+
+    throw new NotFoundException('Tarefa não encontrada');
   }
 
   createTask(body: any) {
@@ -29,15 +33,31 @@ export class TasksService {
   updateTask(id: string, body: any) {
     const taskIndex = this.tasks.findIndex((task) => task.id === Number(id));
 
-    if (taskIndex >= 0) {
-      const taskItem = this.tasks[taskIndex];
-
-      this.tasks[taskIndex] = {
-        ...taskItem,
-        ...body,
-      };
+    if (taskIndex < 0) {
+      throw new NotFoundException('Tarefa não encontrada');
     }
 
+    const taskItem = this.tasks[taskIndex];
+
+    this.tasks[taskIndex] = {
+      ...taskItem,
+      ...body,
+    };
+
     return 'Tarefa atualizada com sucesso';
+  }
+
+  deleteTask(id: string) {
+    const taskIndex = this.tasks.findIndex((task) => task.id === Number(id));
+
+    if (taskIndex < 0) {
+      throw new NotFoundException('Tarefa não encontrada');
+    }
+
+    this.tasks.splice(taskIndex, 1);
+
+    return {
+      message: 'Tarefa excluída com sucesso',
+    };
   }
 }
