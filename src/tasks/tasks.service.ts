@@ -8,9 +8,9 @@ export class TasksService {
   private tasks: Task[] = [
     {
       id: 1,
-      title: 'Task 4',
-      description: 'Task Desc 4',
-      completed: true,
+      title: 'Task 1',
+      description: 'Task Desc 1',
+      completed: false,
     },
   ];
 

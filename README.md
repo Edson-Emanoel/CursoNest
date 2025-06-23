@@ -1,3 +1,5 @@
 - Gera um novo arquivo de module: `nest g module nome-modelo`
 - Gera um novo arquivo de controller: `nest g controller nome-modelo`
 - Gera um novo arquivo de service: `nest g service nome-modelo`
+- Instala o 'class-validator' e o 'class-transformer', que permite usarmos pipes : `npm install class-validator class-transformer`
+- Instala o '@nestjs/mapped-types' : `npm install @nestjs/mapped-types`
