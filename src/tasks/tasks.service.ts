@@ -1,9 +1,18 @@
+import { CreateTaskDto } from './dto/create-task.dto';
+import { UpdateTaskDto } from './dto/update-task.dto';
 import { Task } from './entities/task.entity';
 import { Injectable, NotFoundException } from '@nestjs/common';
 
 @Injectable()
 export class TasksService {
-  private tasks: Task[] = [];
+  private tasks: Task[] = [
+    {
+      id: 1,
+      title: 'Task 4',
+      description: 'Task Desc 4',
+      completed: true,
+    },
+  ];
 
   findAllTasks() {
     return this.tasks;
@@ -17,12 +26,13 @@ export class TasksService {
     throw new NotFoundException('Tarefa não encontrada');
   }
 
-  createTask(body: any) {
+  createTask(createTaskDto: CreateTaskDto) {
     const newId = this.tasks.length + 1;
 
-    const newTask: Task = {
+    const newTask = {
       id: newId,
-      ...body,
+      ...createTaskDto,
+      completed: false,
     };
 
     this.tasks.push(newTask);
@@ -30,7 +40,7 @@ export class TasksService {
     return newTask;
   }
 
-  updateTask(id: string, body: any) {
+  updateTask(id: string, updateTaskDto: UpdateTaskDto) {
     const taskIndex = this.tasks.findIndex((task) => task.id === Number(id));
 
     if (taskIndex < 0) {
@@ -41,7 +51,7 @@ export class TasksService {
 
     this.tasks[taskIndex] = {
       ...taskItem,
-      ...body,
+      ...updateTaskDto,
     };
 
     return 'Tarefa atualizada com sucesso';
