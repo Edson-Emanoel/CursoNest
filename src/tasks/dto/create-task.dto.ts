@@ -7,7 +7,7 @@ export class CreateTaskDto {
   @IsString()
   @MinLength(5, { message: 'O título deve ter pelo menos 5 caracteres' })
   @IsNotEmpty({ message: 'O título é obrigatório' })
-  readonly title: string;
+  readonly name: string;
 
   @IsString()
   @IsNotEmpty({ message: 'A descrição é obrigatória' })
