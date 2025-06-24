@@ -3,13 +3,22 @@ import { CreateTaskDto } from './dto/create-task.dto';
 import { UpdateTaskDto } from './dto/update-task.dto';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { HttpException, HttpStatus, Injectable, NotFoundException } from '@nestjs/common';
+import { PaginationDto } from 'src/common/dto/pagination.dto';
 
 @Injectable()
 export class TasksService {
   constructor(private prisma: PrismaService) {}
 
-  async findAllTasks() {
-    const allTasks = await this.prisma.task.findMany();
+  async findAllTasks(paginationDto?: PaginationDto) {
+    const { limit = 10, offset = 0 } = paginationDto;
+
+    const allTasks = await this.prisma.task.findMany({
+      take: limit,
+      skip: offset,
+      orderBy: {
+        createdAt: 'desc',
+      }
+    });
     return allTasks;
   }
 
